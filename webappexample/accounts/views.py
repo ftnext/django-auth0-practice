@@ -1,8 +1,7 @@
-import json
 from urllib.parse import quote_plus, urlencode
 
 from authlib.integrations.django_client import OAuth
-from django.shortcuts import redirect, render
+from django.shortcuts import redirect
 from django.conf import settings
 from django.urls import reverse
 
@@ -16,27 +15,16 @@ oauth.register(
 )
 
 
-def index(request):
-    return render(
-        request,
-        "accounts/index.html",
-        context={
-            "session": request.session.get("user"),
-            "pretty": json.dumps(request.session.get("user"), indent=4),
-        },
-    )
-
-
 def login(request):
     return oauth.auth0.authorize_redirect(
-        request, request.build_absolute_uri(reverse("callback"))
+        request, request.build_absolute_uri(reverse("accounts:callback"))
     )
 
 
 def callback(request):
     token = oauth.auth0.authorize_access_token(request)
     request.session["user"] = token
-    return redirect(request.build_absolute_uri(reverse("index")))
+    return redirect(request.build_absolute_uri(reverse("myapp:index")))
 
 
 def logout(request):
@@ -46,7 +34,7 @@ def logout(request):
         f"https://{settings.AUTH0_DOMAIN}/v2/logout?"
         + urlencode(
             {
-                "returnTo": request.build_absolute_uri(reverse("index")),
+                "returnTo": request.build_absolute_uri(reverse("myapp:index")),
                 "client_id": settings.AUTH0_CLIENT_ID,
             },
             quote_via=quote_plus,

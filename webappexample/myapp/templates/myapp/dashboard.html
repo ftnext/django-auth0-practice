@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Dashboard</title>
+</head>
+
+<body>
+    <h1>Welcome to the Dashboard</h1>
+    <p>Hello, {{ request.session.user.userinfo.nickname }}!</p>
+    <p><a href="{% url 'myapp:index' %}">Home</a></p>
+</body>
+
+</html>

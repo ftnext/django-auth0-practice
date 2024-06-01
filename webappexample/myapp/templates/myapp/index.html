@@ -8,6 +8,7 @@
 <body>
     {% if session %}
     <h1>Welcome {{ session.userinfo.name }}!</h1>
+    <p><a href="{% url 'myapp:dashboard' %}">Go to Dashboard</a></p>
     <p><a href="{% url 'accounts:logout' %}">Logout</a></p>
     <div>
         <pre>{{ pretty }}</pre>

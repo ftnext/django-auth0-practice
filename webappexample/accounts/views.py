@@ -1,4 +1,5 @@
 import json
+from urllib.parse import quote_plus, urlencode
 
 from authlib.integrations.django_client import OAuth
 from django.shortcuts import redirect, render
@@ -36,3 +37,18 @@ def callback(request):
     token = oauth.auth0.authorize_access_token(request)
     request.session["user"] = token
     return redirect(request.build_absolute_uri(reverse("index")))
+
+
+def logout(request):
+    request.session.clear()
+
+    return redirect(
+        f"https://{settings.AUTH0_DOMAIN}/v2/logout?"
+        + urlencode(
+            {
+                "returnTo": request.build_absolute_uri(reverse("index")),
+                "client_id": settings.AUTH0_CLIENT_ID,
+            },
+            quote_via=quote_plus,
+        )
+    )

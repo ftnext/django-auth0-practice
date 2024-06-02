@@ -53,3 +53,13 @@ def private(request):
             "message": "Hello from a private endpoint! You need to be authenticated to see this."
         }
     )
+
+
+@api_view(["GET"])
+@requires_scope("read:messages")
+def private_scoped(request):
+    return JsonResponse(
+        {
+            "message": "Hello from a private endpoint! You need to be authenticated and have a scope of read:messages to see this."
+        }
+    )

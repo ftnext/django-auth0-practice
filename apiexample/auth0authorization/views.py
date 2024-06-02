@@ -2,6 +2,8 @@ from functools import wraps
 
 import jwt
 from django.http import JsonResponse
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import AllowAny
 
 
 def get_token_auth_header(request):
@@ -32,3 +34,13 @@ def requires_scope(required_scope):
         return decorated
 
     return require_scope
+
+
+@api_view(["GET"])
+@permission_classes([AllowAny])
+def public(request):
+    return JsonResponse(
+        {
+            "message": "Hello from a public endpoint! You don't need to be authenticated to see this."
+        }
+    )

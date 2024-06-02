@@ -35,10 +35,10 @@ idna==3.7
     # via requests
 pycparser==2.22
     # via cffi
-pyjwt[crypto]==2.8.0
+pyjwt[crypto]==1.7.1
     # via
+    #   -r requirements.in
     #   drf-jwt
-    #   pyjwt
 requests==2.32.3
     # via -r requirements.in
 sqlparse==0.5.0

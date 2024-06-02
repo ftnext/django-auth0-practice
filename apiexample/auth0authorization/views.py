@@ -44,3 +44,12 @@ def public(request):
             "message": "Hello from a public endpoint! You don't need to be authenticated to see this."
         }
     )
+
+
+@api_view(["GET"])
+def private(request):
+    return JsonResponse(
+        {
+            "message": "Hello from a private endpoint! You need to be authenticated to see this."
+        }
+    )
